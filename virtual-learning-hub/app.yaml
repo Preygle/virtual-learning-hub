@@ -1,0 +1,16 @@
+runtime: python312  # Change based on your Python version
+entrypoint: gunicorn -b :$PORT app:app  # Adjust based on your framework
+
+instance_class: F1  # Free-tier instance
+
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 2  # Free-tier allows up to 28 instance hours/day
+
+handlers:
+- url: /static
+  static_dir: static
+
+- url: /.*
+  script: auto

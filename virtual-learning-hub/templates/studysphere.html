@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySphere</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .body {
+            background-color: #f0f8ff;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background-color: #2c3e50;
+            justify-content: space-between;
+            padding: 15px 30px;
+        }
+
+        .logo img {
+            width: 80px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex: 1;
+            margin: 0 20px;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f39c12;
+        }
+
+        .nav-links a.active {
+            color: #f39c12;
+            font-weight: bold;
+            border-bottom: 2px solid #f39c12;
+        }
+
+        .signup-btn {
+            background-color: #f39c12;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-left: auto;
+        }
+
+        .signup-btn:hover {
+            background-color: #e67e22;
+        }
+        .home-section {
+            background-image: url('../static/images/home_BG.avif'); 
+            background-size: cover;
+            background-position: center;
+            height: 100vh; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .home-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(65, 65, 65, 0.208); 
+        }
+
+        .home-content {
+            position: relative;
+            z-index: 1;
+            }
+
+        .home-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .home-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+
+        .home-content .cta-button {
+            background: #ff5722; 
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none; 
+        }
+
+        .home-content .cta-button:hover {
+            background: #e64a19; 
+        }
+        .container {
+            width: 100%;
+            margin: auto;
+            overflow: hidden;
+            background-color: #f0f8ff;
+        }
+        .upload-form,
+        .uploaded-files {
+            background: #f0f8ff;
+            padding: 25px;
+            margin-top: 0px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="file"]:focus,
+        .form-group select:focus {
+            border-color: #f39c12;
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 165, 0, 0.4);
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #f39c12;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.3s ease-in-out;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #e67e22;
+            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.4);
+        }
+
+        /* Uploaded Files */
+        .file-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .file-list li {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            transition: 0.3s ease-in-out;
+        }
+
+        .file-list li::before {
+            content: "📄";
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        .file-list li:hover {
+            background: #f4f4f4;
+            border-color: #f39c12;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 165, 0, 0.2);
+        }
+
+        .box-2 {
+            margin-top: 0px;
+            height: 700px;
+            width: 100%;
+            background-color: #f0f8ff;
+        }
+
+        .services {
+            display: flex;
+            margin-top: 0px;
+        }
+
+        .services-1 {
+            height: 540px;
+            width: 23%;
+            margin-left: 20px;
+            border: 2px solid black;
+        }
+
+        .services-1 img {
+            margin-top: 10px;
+            margin-left: 40px;
+            height: 200px;
+            width: 80%;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .services-1 p {
+            text-align: justify;
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-weight: 700;
+            padding: auto;
+        }
+
+        .box-3 {
+            height: 300px;
+            width: 100%;
+            background-color: #f0f8ff;
+            margin-top: -14px;
+        }
+
+        .to-do {
+            height: 240px;
+            width: 50%;
+            margin-left: 400px;
+            margin-top: -8px;
+        }
+
+        .btn {
+            height: 40px;
+            width: 15%;
+            margin-left: 350px;
+            border-radius: 4px;
+            margin-top: 10px;
+            background-color: black;
+            color: white;
+        }
+
+        .btn:hover {
+            cursor: pointer;
+            background-color: yellow;
+            color: black;
+        }
+
+        .box-4 {
+            height: 750px;
+            width: 100%;
+            background-color: #f0f8ff;
+            margin-top: -20px;
+        }
+
+        .streak {
+            margin-left: 650px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            margin-left: 470px;
+            width: 35%;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 15px;
+            width: 70%;
+            background-color: #ff9800;
+        }
+
+        .calender {
+            display: flex;
+            margin-left: 440px;
+            margin-top: 20px;
+        }
+
+        .day {
+            height: 30px;
+            width: 4%;
+            border: 2px solid black;
+            align-items: center;
+            margin-left: 32px;
+            padding: auto;
+            background-color: #ff9800;
+        }
+
+        .day p {
+            text-align: center;
+            color: black;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        .active p {
+            text-align: center;
+            color: white;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        .features {
+            height: 700px;
+            width: 100%;
+            margin-top: 15px;
+            display: flex;
+        }
+
+        .feature-1 {
+            margin-left: 30px;
+            width: 30%;
+            border: 2px solid black;
+            margin-top: 10px;
+            height: 500px;
+        }
+
+        .feature-1 img {
+            margin-top: 10px;
+            margin-left: 40px;
+            height: 200px;
+            width: 80%;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .btn4 {
+            margin: 20px 170px;
+            height: 35px;
+            width: 100px;
+            border-radius: 5px;
+            background-color: #f39c12;
+            padding: 8px 15px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn4:hover {
+            background-color: #e67e22;
+            cursor: pointer;
+            box-shadow: #f39c12;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 12px;
+            accent-color: #ff6b6b;
+        }
+
+        label {
+            flex: 1;
+            font-size: 20px;
+            color: #444;
+        }
+
+        .task:hover {
+            background: #ffe8e8;
+        }
+
+        .add-task {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .add-task input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .add-task button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin-left: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-task button:hover {
+            background: #e05656;
+        }
+
+        .box-5 {
+            height: 350px;
+            background-color: #f0f8ff;
+        }
+
+        .btn10 {
+            margin-left: 670px;
+            height: 40px;
+            width: 100px;
+            border-radius: 5px;
+            margin-top: 30px;
+            background-color: #e67e22;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        .box-6 {
+            height: 80px;
+            background-color: black;
+            color: white;
+        }
+        .para1{
+            margin-left: 560px;margin-top: 0px;font-size: 14px;
+            padding: 20px 20px;
+        }
+        .box-2, .box-3, .box-4, .box-5 {
+            padding: 40px 0; /* Add more vertical spacing */
+        }
+        .btn4, .btn10, .signup-btn {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn4:hover, .btn10:hover, .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        .file-list li:hover {
+            background: #f4f4f4;
+            border-color: #f39c12;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 165, 0, 0.2);
+        }
+        .services-1 img:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        .form-group input, .form-group select {
+            border-radius: 8px;
+        }
+        .form-group input[type="file"] {
+            padding: 8px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .body {
+            background: linear-gradient(135deg, #f0f8ff, #e6f7ff);
+        }
+        .box-6 a {
+            color: #f39c12;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .box-6 a:hover {
+            color: #e67e22;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .signup-container {
+            margin-left: auto;  
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo"><img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo"></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#notes">Notes</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+            <li><a href="about_us.html">About Us</a></li>
+            <li><a href="contact_us.html">Contact Us</a></li>
+        </ul>
+        <div class="signup-container">
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </div>
+    <section class="home-section">
+        <div id="home"  class="home-content">
+          <h1>Welcome to StudySphere</h1>
+          <p>Your tagline or a short description goes here.</p>
+          <a href="#services" class="cta-button">Get Started</a>
+        </div>
+    </section>
+    <div id="services" class="box-2">
+        <h2 style="text-align: center;font-weight: 700;font-size: 40px;">Our Services</h2>
+        <div class="services">
+            <div class="services-1">
+                <h2 style="text-align: center;">Organized Notes and Lectures</h2>
+                <img src="{{ url_for('static', filename='images/gettyimages-1197090931-612x612.jpg') }}" alt="chicken">
+                <p>This feature allows users to create, edit, and categorize notes efficiently, making studying more
+                    structured. Users can upload lecture materials, including PDFs, videos, and external links, ensuring
+                    easy access to resources in one place. A powerful search and filter system helps in quickly
+                    retrieving specific notes based on keywords or topics. Additionally, users can export their notes as
+                    PDFs or share them with peers for collaborative learning. To enhance user experience, an auto-save
+                    functionality prevents accidental data loss, ensuring that no important information is lost.</p>
+            </div>
+            <div class="services-1">
+                <h2 style="text-align: center;">To do-list</h2>
+                <img src="{{ url_for('static', filename='images/do-list-checklist-cupboard-icon-600nw-2480380541.webp') }}" alt="to-do list">
+                <p>The to-do list feature enables users to manage their tasks efficiently by adding, editing, and
+                    deleting them as needed. Users can set deadlines and prioritize tasks based on importance, ensuring
+                    better time management. Reminders and notifications help users stay on track with their academic
+                    goals. A drag-and-drop interface makes it easy to reorder tasks, allowing for a more flexible
+                    workflow. The system also provides insights into task completion percentages, enabling users to
+                    monitor their productivity and improve their study habits accordingly.</p>
+            </div>
+            <div class="services-1">
+                <h2 style="text-align: center;">Study Roadmaps</h2>
+                <img src="{{ url_for('static', filename='images/test.webp') }}" alt="">
+                <p>The study roadmaps feature offers structured learning plans tailored to various subjects and
+                    competitive exams. Users can follow pre-built roadmaps or customize their own, allowing for a
+                    personalized learning experience. Each roadmap provides estimated completion times for different
+                    milestones, helping users pace their studies effectively. Additionally, the platform suggests
+                    high-quality study materials such as books, videos, and articles relevant to each topic. To
+                    encourage collaboration, users can share and discuss their study roadmaps with peers, fostering a
+                    supportive learning community.</p>
+            </div>
+        </div>
+    </div>
+    <hr style="font: bolder;">
+    <div id="notes" class="container">
+        <section class="upload-form">
+            <h2>Upload Notes and Lectures</h2>
+            <form>
+                <div class="form-group">
+                    <label for="file-name">File Name:</label>
+                    <input type="text" id="file-name" name="file-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a subject</option>
+                        <option value="math">Mathematics</option>
+                        <option value="science">Science</option>
+                        <option value="history">History</option>
+                        <option value="literature">Literature</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="file-type">File Type:</label>
+                    <select id="file-type" name="file-type" required>
+                        <option value="">Select file type</option>
+                        <option value="notes">Notes</option>
+                        <option value="lecture">Lecture</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="file-upload">Choose File:</label>
+                    <input type="file" id="file-upload" name="file-upload" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Upload">
+                </div>
+            </form>
+        </section>
+
+        <section class="uploaded-files">
+            <h2>Uploaded Files</h2>
+            <ul class="file-list">
+                <li>Mathematics Notes - Chapter 1.pdf</li>
+                <li>Science Lecture - Introduction to Biology.pptx</li>
+                <li>History Notes - World War II.docx</li>
+            </ul>
+        </section>
+    </div>
+    <hr>
+
+    <div id="feedback" class="box-5">
+        <h2 style="text-align: center;font-size: 30px;">FeedBack Form</h2>
+        <br>
+        <input type="text" placeholder="Name"
+            style="height: 30px;border-radius: 3px;width: 40%;margin-left: 450px;margin-top: 15px;">
+        <input type="text" placeholder="Your experience"
+            style="height: 50px;border-radius: 3px;width: 40%;margin-left: 450px;margin-top: 15px;">
+        <input type="number" placeholder="Rating"
+            style="height: 30px;border-radius: 3px;width: 40%;margin-left: 450px;margin-top: 15px;">
+        <input type="text" placeholder="Improvements"
+            style="height: 30px;border-radius: 3px;width: 40%;margin-left: 450px;margin-top: 15px;">
+        <button class="btn10">Submit Now!!</button>
+        <br><br><br><br>
+    </div>
+    <div class="box-6">
+        <div class="para1">
+            <p >Condition of use Privacy Notice Your ads privacy choices.</p>
+            <p style="margin-left: 30px;">© 1996-2025, Amazon.com, Inc. or its affiliates</p>
+        </div>
+    </div>
+
+      
+</body>
+
+</html>
