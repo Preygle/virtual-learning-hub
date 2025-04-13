@@ -385,7 +385,7 @@
             background-color: #f39c12;
             padding: 8px 15px;
             color: white;
-            font-weight: bold;
+            font-weight: bold;  
         }
 
         .btn4:hover {
@@ -523,15 +523,15 @@
     <div class="navbar">
         <div class="logo"><img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo"></div>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#notes">Notes</a></li>
             <li><a href="#feedback">Feedback</a></li>
-            <li><a href="about_us.html">About Us</a></li>
-            <li><a href="contact_us.html">Contact Us</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact Us</a></li>
         </ul>
         <div class="signup-container">
-            <a href="signup.html" class="signup-btn">Sign Up</a>
+            <a href="/signup" class="signup-btn">Sign Up</a>
         </div>
     </div>
     <section class="home-section">
@@ -542,89 +542,56 @@
         </div>
     </section>
     <div id="services" class="box-2">
-        <h2 style="text-align: center;font-weight: 700;font-size: 40px;">Our Services</h2>
+        <h2 style="text-align: center; font-weight: 700; font-size: 40px;">Our Services</h2>
         <div class="services">
-            <div class="services-1">
+    
+            <div class="services-1" data-redirect="/storage">
                 <h2 style="text-align: center;">Organized Notes and Lectures</h2>
-                <img src="{{ url_for('static', filename='images/gettyimages-1197090931-612x612.jpg') }}" alt="chicken">
-                <p>This feature allows users to create, edit, and categorize notes efficiently, making studying more
-                    structured. Users can upload lecture materials, including PDFs, videos, and external links, ensuring
-                    easy access to resources in one place. A powerful search and filter system helps in quickly
-                    retrieving specific notes based on keywords or topics. Additionally, users can export their notes as
-                    PDFs or share them with peers for collaborative learning. To enhance user experience, an auto-save
-                    functionality prevents accidental data loss, ensuring that no important information is lost.</p>
+                <img src="{{ url_for('static', filename='images/gettyimages-1197090931-612x612.jpg') }}" alt="notes and lectures">
+                <p>This feature allows users to create, edit, and categorize notes efficiently, making studying more structured. 
+                    Users can upload lecture materials ensuring easy access to resources in one place. A powerful search and filter 
+                    system helps in quickly retrieving specific notes based on keywords or topics. Additionally, users can export their 
+                    notes as PDFs or share them with peers for collaborative learning. To enhance user experience, an auto-save functionality 
+                    prevents accidental data loss, ensuring that no important information is lost.</p>
             </div>
-            <div class="services-1">
-                <h2 style="text-align: center;">To do-list</h2>
+    
+            <div class="services-1" data-redirect="/todo-list">
+                <h2 style="text-align: center;">To-do List</h2>
                 <img src="{{ url_for('static', filename='images/do-list-checklist-cupboard-icon-600nw-2480380541.webp') }}" alt="to-do list">
-                <p>The to-do list feature enables users to manage their tasks efficiently by adding, editing, and
-                    deleting them as needed. Users can set deadlines and prioritize tasks based on importance, ensuring
-                    better time management. Reminders and notifications help users stay on track with their academic
-                    goals. A drag-and-drop interface makes it easy to reorder tasks, allowing for a more flexible
-                    workflow. The system also provides insights into task completion percentages, enabling users to
-                    monitor their productivity and improve their study habits accordingly.</p>
+                <p>The to-do list feature enables users to manage their tasks efficiently by adding, editing, and deleting them as needed. 
+                    Users can set deadlines and prioritize tasks based on importance, ensuring better time management. Reminders and 
+                    notifications help users stay on track with their academic goals. A drag-and-drop interface makes it easy to reorder 
+                    tasks, allowing for a more flexible workflow. The system also provides insights into task completion percentages, 
+                    enabling users to monitor their productivity and improve their study habits accordingly.</p>
             </div>
-            <div class="services-1">
-                <h2 style="text-align: center;">Study Roadmaps</h2>
-                <img src="{{ url_for('static', filename='images/test.webp') }}" alt="">
-                <p>The study roadmaps feature offers structured learning plans tailored to various subjects and
-                    competitive exams. Users can follow pre-built roadmaps or customize their own, allowing for a
-                    personalized learning experience. Each roadmap provides estimated completion times for different
-                    milestones, helping users pace their studies effectively. Additionally, the platform suggests
-                    high-quality study materials such as books, videos, and articles relevant to each topic. To
-                    encourage collaboration, users can share and discuss their study roadmaps with peers, fostering a
-                    supportive learning community.</p>
+    
+            <div class="services-1" data-redirect="/courses">
+                <h2 style="text-align: center;">Online Courses</h2>
+                <img src="{{ url_for('static', filename='images/pngtree-online-network-online-education-class-illustration-png-image_3164534.jpg') }}" alt="online courses">
+                <p>The online lectures feature provides users with easy access to high-quality educational videos across a wide range of subjects and skill levels. 
+                    Each lecture is delivered by experienced educators and is designed to align with academic syllabi or competitive exam preparation. 
+                    Lectures are available on-demand, allowing students to learn at their own pace and revisit topics as needed. 
+                    The platform supports features like subtitles, playback speed control, and lecture notes for enhanced comprehension. 
+                    Users can bookmark lectures, track their progress, and participate in discussion forums to clarify doubts, 
+                    making the learning experience both interactive and flexible.</p>
             </div>
+    
+            <div class="services-1" data-redirect="/useful_tools">
+                <h2 style="text-align: center;">Online Tools</h2>
+                <img src="{{ url_for('static', filename='images/online-tools-for-workshops-cover.png') }}" alt="online tools">
+                <p>The online tools feature offers a collection of utilities designed to support students and educators in their learning journey. 
+                    These tools include calculators, unit converters, equation solvers, code editors, and more—each tailored to simplify complex academic tasks. 
+                    Accessible directly through the platform, the tools are lightweight, fast, and require no installation. Users can instantly perform calculations, 
+                    test small code snippets, or convert values while studying, without switching between multiple apps. The tools are regularly updated to match 
+                    curriculum standards and support various academic streams, enhancing productivity and reducing time spent on manual work.</p>
+            </div>
+    
         </div>
     </div>
+    
     <hr style="font: bolder;">
-    <div id="notes" class="container">
-        <section class="upload-form">
-            <h2>Upload Notes and Lectures</h2>
-            <form>
-                <div class="form-group">
-                    <label for="file-name">File Name:</label>
-                    <input type="text" id="file-name" name="file-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject:</label>
-                    <select id="subject" name="subject" required>
-                        <option value="">Select a subject</option>
-                        <option value="math">Mathematics</option>
-                        <option value="science">Science</option>
-                        <option value="history">History</option>
-                        <option value="literature">Literature</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="file-type">File Type:</label>
-                    <select id="file-type" name="file-type" required>
-                        <option value="">Select file type</option>
-                        <option value="notes">Notes</option>
-                        <option value="lecture">Lecture</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="file-upload">Choose File:</label>
-                    <input type="file" id="file-upload" name="file-upload" required>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Upload">
-                </div>
-            </form>
-        </section>
-
-        <section class="uploaded-files">
-            <h2>Uploaded Files</h2>
-            <ul class="file-list">
-                <li>Mathematics Notes - Chapter 1.pdf</li>
-                <li>Science Lecture - Introduction to Biology.pptx</li>
-                <li>History Notes - World War II.docx</li>
-            </ul>
-        </section>
-    </div>
     <hr>
-
+    
     <div id="feedback" class="box-5">
         <h2 style="text-align: center;font-size: 30px;">FeedBack Form</h2>
         <br>
@@ -645,7 +612,23 @@
             <p style="margin-left: 30px;">© 1996-2025, Amazon.com, Inc. or its affiliates</p>
         </div>
     </div>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var serviceDivs = document.querySelectorAll('.services-1');
+            
+            serviceDivs.forEach(function(div) {
+                div.addEventListener('click', function() {
+                    var redirectUrl = this.getAttribute('data-redirect');
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                    }
+                });
+    
+                div.style.cursor = 'pointer';
+            });
+        });
+    </script>
+    
       
 </body>
 
