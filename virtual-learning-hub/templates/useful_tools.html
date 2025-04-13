@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudySphere - Developer Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .body {
+            background-color: #f0f8ff;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background-color: #2c3e50;
+            justify-content: space-between;
+            padding: 15px 30px;
+        }
+
+        .logo img {
+            width: 80px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex: 1;
+            margin: 0 20px;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f39c12;
+        }
+
+        .nav-links a.active {
+            color: #f39c12;
+            font-weight: bold;
+            border-bottom: 2px solid #f39c12;
+        }
+
+        .signup-btn {
+            background-color: #f39c12;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-left: auto;
+        }
+
+        .signup-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .tools-container {
+            padding: 40px 20px;
+            background-color: #f0f8ff;
+        }
+
+        .tools-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 40px;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-image {
+            height: 180px;
+            width: 100%;
+            object-fit: contain;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+            padding: 10px;
+        }
+
+        .tool-content {
+            padding: 20px;
+        }
+
+        .tool-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .tool-category {
+            color: #f39c12;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .tool-description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .tool-link {
+            display: inline-block;
+            background-color: #f39c12;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .tool-link:hover {
+            background-color: #e67e22;
+        }
+
+        .signup-container {
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="/Users/madhutripathi/Desktop/logo.svg" alt="logo" />
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="" >
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#notes">Notes</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+            <li><a href="about_us.html">About Us</a></li>
+            <li><a href="contact_us.html">Contact Us</a></li>
+        </ul>
+        <div class="signup-container">
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="tools-container">
+        <h1 class="tools-title">Essential Developer Tools</h1>
+        <div class="tools-grid">
+            <!-- Symbolab -->
+            <div class="tool-card">
+                <img src="{{ url_for('static', filename='images/symbolab.png') }}" alt="" class="tool-image">
+                <!-- <img src="/Users/madhutripathi/Desktop/symbolab.png" alt="Symbolab Logo" class="tool-image"> -->
+                <div class="tool-content">
+                    <h3 class="tool-title">Symbolab</h3>
+                    <span class="tool-category">Math Solver</span>
+                    <p class="tool-description">Step-by-step calculator for integrals, derivatives, and algebra
+                        problems.</p>
+                    <a href="https://www.symbolab.com/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+
+            <!-- Desmos -->
+            <div class="tool-card">
+                <img src="{{ url_for('static', filename='images/desmos.webp') }}" alt="" class="tool-image">
+                <div class="tool-content">
+                    <h3 class="tool-title">Desmos Graphing Calculator</h3>
+                    <span class="tool-category">Math Visualization</span>
+                    <p class="tool-description">Interactive graphing tool for mathematical exploration and data
+                        visualization.</p>
+                    <a href="https://www.desmos.com/calculator" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+
+            <!-- WolframAlpha -->
+            <div class="tool-card">
+                <img src="{{ url_for('static', filename='images/WolframAlpha.webp') }}" alt="" class="tool-image">
+                <div class="tool-content">
+                    <h3 class="tool-title">Wolfram Alpha</h3>
+                    <span class="tool-category">Computational Engine</span>
+                    <p class="tool-description">Solves math problems, generates plots, and answers factual queries.</p>
+                    <a href="https://www.wolframalpha.com/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+
+            <!-- Replit -->
+            <div class="tool-card">
+                <img src="{{ url_for('static', filename='images/replit.avif') }}" alt="" class="tool-image">
+                <div class="tool-content">
+                    <h3 class="tool-title">Replit</h3>
+                    <span class="tool-category">Online IDE</span>
+                    <p class="tool-description">Cloud-based IDE supporting 50+ languages. Great for learning and
+                        collaboration.</p>
+                    <a href="https://replit.com/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+
+            <!-- Python Tutor -->
+            <div class="tool-card">
+        
+                <img src="{{ url_for('static', filename='images/python_tutor.png') }}" alt="" class="tool-image">
+                <div class="tool-content">
+                    <h3 class="tool-title">Python Tutor</h3>
+                    <span class="tool-category">Code Visualizer</span>
+                    <p class="tool-description">Visualize execution of Python, Java, C++, and JavaScript code
+                        line-by-line.</p>
+                    <a href="https://pythontutor.com/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+
+            <!-- Regex101 -->
+            <div class="tool-card">
+                <img src="{{ url_for('static', filename='images/Regex.jpeg') }}" alt="" class="tool-image">
+                
+                <div class="tool-content">
+                    <h3 class="tool-title">Regex101</h3>
+                    <span class="tool-category">Regex Tester</span>
+                    <p class="tool-description">Test, debug, and learn regular expressions with real-time explanations.
+                    </p>
+                    <a href="https://regex101.com/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+
+            <!-- Excalidraw -->
+            <div class="tool-card">
+                <img src="{{ url_for('static', filename='images/Excalidraw.png') }}" alt="" class="tool-image">               
+                 <div class="tool-content">
+                    <h3 class="tool-title">Excalidraw</h3>
+                    <span class="tool-category">Diagram Tool</span>
+                    <p class="tool-description">Draw diagrams with a hand-drawn feel. Ideal for planning and system
+                        design.</p>
+                    <a href="https://excalidraw.com/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+
+            <!-- Draw.io -->
+            <div class="tool-card">
+                <img src="{{ url_for('static', filename='images/drawio.webp') }}" alt="" class="tool-image">
+                
+                <div class="tool-content">
+                    <h3 class="tool-title">Draw.io</h3>
+                    <span class="tool-category">Flowchart Tool</span>
+                    <p class="tool-description">Create professional diagrams and flowcharts. Easy to use and free
+                        forever.</p>
+                    <a href="https://app.diagrams.net/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+
+            <!-- StackBlitz -->
+            <div class="tool-card">
+                <img src="{{ url_for('static', filename='images/StackBlitz.webp') }}" alt="" class="tool-image">
+                <div class="tool-content">
+                    <h3 class="tool-title">StackBlitz</h3>
+                    <span class="tool-category">Online IDE</span>
+                    <p class="tool-description">Build and deploy full-stack web apps in your browser — supports Angular,
+                        React, Vue, and more.</p>
+                    <a href="https://stackblitz.com/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

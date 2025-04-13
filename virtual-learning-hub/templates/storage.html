@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCS Storage Manager</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], input[type="file"], select, button {
+            margin-bottom: 10px; padding: 8px; width: calc(100% - 18px);
+            max-width: 300px;
+        }
+        button { cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; }
+        button:hover { background-color: #0056b3; }
+        #status { margin-top: 15px; font-weight: bold; }
+        ul { list-style: none; padding: 0; max-height: 200px; overflow-y: auto; border: 1px solid #eee; }
+        li { padding: 5px; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+    <h1>Google Cloud Storage</h1>
+    <p>📂 Bucket: <span id="bucketName">23bce1740_vlh</span></p>
+
+    <div class="section">
+        <h2>📁 Create New Folder</h2>
+        <label for="newFolderName">Folder Name:</label>
+        <input type="text" id="newFolderName" placeholder="Enter folder name (no slashes)">
+        <button id="createFolderBtn">Create Folder</button>
+    </div>
+
+    <div class="section">
+        <h2>Files in Bucket</h2>
+         <button id="refreshFilesBtn">Refresh List</button>
+        <label for="fileSelect">Select File:</label>
+        <select id="fileSelect" name="fileSelect">
+            <option value="">-- Select a file --</option>
+        </select>
+        <button id="downloadBtn">View Selected</button>
+        <button id="deleteBtn">Delete Selected</button>
+    </div>
+
+    <div class="section">
+        <h2>📤 Upload File</h2>
+        <label for="folderSelect">Select Target Folder:</label>
+        <select id="folderSelect" name="folder">
+            <option value="">/ (Root)</option>
+        </select>
+        <br>
+        <label for="fileInput">Choose File:</label>
+        <input type="file" id="fileInput" name="file">
+        <br>
+        <button id="uploadBtn">Upload File</button>
+    </div>
+
+    <div id="status"></div>
+
+    <script>
+        const createFolderBtn = document.getElementById('createFolderBtn');
+        const newFolderNameInput = document.getElementById('newFolderName');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
+        const folderSelect = document.getElementById('folderSelect');
+        const fileSelect = document.getElementById('fileSelect');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const refreshFilesBtn = document.getElementById('refreshFilesBtn');
+        const statusDiv = document.getElementById('status');
+
+        function updateStatus(message, isError = false) {
+            statusDiv.textContent = message;
+            statusDiv.style.color = isError ? 'red' : 'green';
+        }
+
+        async function fetchAndPopulateFiles() {
+            updateStatus('Loading files...');
+            try {
+                const response = await fetch('/list-files');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                fileSelect.innerHTML = '<option value="">-- Select a file --</option>';
+                if (data.files && data.files.length > 0) {
+                    data.files.forEach(file => {
+                        if (!file.endsWith('/')) {
+                             const option = document.createElement('option');
+                             option.value = file;
+                             option.textContent = file;
+                             fileSelect.appendChild(option);
+                        }
+                    });
+                } else {
+                     fileSelect.innerHTML = '<option value="">-- No files found --</option>';
+                }
+
+                folderSelect.innerHTML = '<option value="">/ (Root)</option>';
+                 if (data.folders && data.folders.length > 0) {
+                    data.folders.forEach(folder => {
+                        const option = document.createElement('option');
+                        option.value = folder;
+                        option.textContent = folder;
+                        folderSelect.appendChild(option);
+                    });
+                 }
+                updateStatus('File list updated.', false);
+
+            } catch (error) {
+                console.error('Error fetching files:', error);
+                updateStatus(`Error fetching files: ${error.message}`, true);
+                 fileSelect.innerHTML = '<option value="">-- Error loading --</option>';
+                 folderSelect.innerHTML = '<option value="">/ (Root)</option>';
+            }
+        }
+
+        createFolderBtn.addEventListener('click', async () => {
+            const folderName = newFolderNameInput.value.trim();
+            if (!folderName) {
+                updateStatus('Please enter a folder name.', true);
+                return;
+            }
+             if (folderName.includes('/')) {
+                updateStatus('Folder name cannot contain slashes.', true);
+                return;
+            }
+
+            updateStatus('Creating folder...');
+            try {
+                const response = await fetch('/create-folder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ folder: folderName }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    updateStatus(result.message || 'Folder created successfully!', false);
+                    newFolderNameInput.value = '';
+                    fetchAndPopulateFiles();
+                } else {
+                    updateStatus(`Error creating folder: ${result.error || response.statusText}`, true);
+                }
+            } catch (error) {
+                console.error('Error creating folder:', error);
+                updateStatus(`Network or unexpected error: ${error.message}`, true);
+            }
+        });
+
+        uploadBtn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            const folder = folderSelect.value;
+
+            if (!file) {
+                updateStatus('Please select a file to upload.', true);
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folder', folder);
+
+            updateStatus(`Uploading ${file.name}...`);
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    updateStatus(result.message || 'File uploaded successfully!', false);
+                    fileInput.value = '';
+                    fetchAndPopulateFiles();
+                } else {
+                    updateStatus(`Error uploading file: ${result.error || response.statusText}`, true);
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                updateStatus(`Network or unexpected error: ${error.message}`, true);
+            }
+        });
+
+        downloadBtn.addEventListener('click', async () => {
+            const selectedFile = fileSelect.value;
+            if (!selectedFile) {
+                updateStatus('Please select a file to download.', true);
+                return;
+            }
+
+            updateStatus(`Getting download link for ${selectedFile}...`);
+            try {
+                const response = await fetch(`/download?file=${encodeURIComponent(selectedFile)}`);
+                const result = await response.json();
+
+                if (response.ok) {
+                    updateStatus('Download link generated. Opening...', false);
+                    window.open(result.url, '_blank');
+                } else {
+                    updateStatus(`Error getting download link: ${result.error || response.statusText}`, true);
+                }
+            } catch (error) {
+                console.error('Error downloading file:', error);
+                updateStatus(`Network or unexpected error: ${error.message}`, true);
+            }
+        });
+
+        deleteBtn.addEventListener('click', async () => {
+            const selectedFile = fileSelect.value;
+            if (!selectedFile) {
+                updateStatus('Please select a file to delete.', true);
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete "${selectedFile}"? This cannot be undone.`)) {
+                return;
+            }
+
+            updateStatus(`Deleting ${selectedFile}...`);
+            try {
+                const response = await fetch(`/delete-file?file=${encodeURIComponent(selectedFile)}`, {
+                    method: 'DELETE',
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    updateStatus(result.message || 'File deleted successfully!', false);
+                    fetchAndPopulateFiles();
+                } else {
+                    updateStatus(`Error deleting file: ${result.error || response.statusText}`, true);
+                }
+            } catch (error) {
+                console.error('Error deleting file:', error);
+                updateStatus(`Network or unexpected error: ${error.message}`, true);
+            }
+        });
+
+        refreshFilesBtn.addEventListener('click', fetchAndPopulateFiles);
+
+        document.addEventListener('DOMContentLoaded', fetchAndPopulateFiles);
+        
+        const BUCKET_NAME = "23bce1746_vlh"; // Define your bucket name here
+
+    // ... (keep functions: updateStatus, fetchAndPopulateFiles) ...
+    // ... (keep event listeners: createFolderBtn, uploadBtn, deleteBtn, refreshFilesBtn) ...
+
+
+    // --- MODIFIED Event Listener for Download Button ---
+    downloadBtn.addEventListener('click', () => { // No async needed now
+        const selectedFile = fileSelect.value;
+        if (!selectedFile) {
+            updateStatus('Please select a file to download.', true);
+            return;
+        }
+
+        // Construct the public URL directly
+        // Use encodeURIComponent on the filename to handle spaces or special chars
+        const publicUrl = `https://storage.googleapis.com/${BUCKET_NAME}/${selectedFile}`;
+        updateStatus(`Opening public URL: ${selectedFile}`, false);
+
+        // Open the constructed URL in a new browser tab
+        window.open(publicUrl, '_blank');
+
+        // Optional: Clear the status message after a few seconds
+        setTimeout(() => updateStatus(''), 3000);
+    });
+
+    </script>
+
+</body>
+</html>

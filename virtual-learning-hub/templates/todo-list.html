@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List - StudySphere</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header styling */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Main content */
+        .main-content {
+            margin-top: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        /* To-do list styling */
+        .todo-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .task {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .task:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .task input[type="checkbox"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .task label {
+            flex-grow: 1;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .add-task {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .add-task input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+        }
+        
+        .add-task button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .add-task button:hover:not(:disabled) {
+            background-color: #45a049;
+        }
+        
+        .add-task button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .delete-btn {
+            background-color: #ff5252;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .delete-btn:hover {
+            background-color: #ff0000;
+        }
+        
+        /* Task categories */
+        .categories {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .category-btn {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .category-btn.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">StudySphere</div>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/storage">Storage</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="main-content">
+            <h1>To-Do List</h1>
+            
+            <div class="todo-container">
+                <div class="categories">
+                    <button class="category-btn active" data-filter="all">All</button>
+                    <button class="category-btn" data-filter="active">Active</button>
+                    <button class="category-btn" data-filter="completed">Completed</button>
+                </div>
+                
+                <div id="task-list">
+                    <!-- Tasks will be added here dynamically -->
+                </div>
+                
+                <div class="add-task">
+                    <input type="text" id="new-task-input" placeholder="Add a new task...">
+                    <button id="add-task-btn" disabled>Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 StudySphere. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const taskInput = document.getElementById('new-task-input');
+            const addButton = document.getElementById('add-task-btn');
+            const taskList = document.getElementById('task-list');
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            
+            let currentFilter = 'all';
+            
+            // Load tasks from localStorage if available
+            loadTasks();
+            
+            // Enable/disable add button based on input
+            taskInput.addEventListener('input', function() {
+                addButton.disabled = taskInput.value.trim() === '';
+            });
+            
+            // Add task when button is clicked
+            addButton.addEventListener('click', addTask);
+            
+            // Add task when Enter key is pressed
+            taskInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && taskInput.value.trim() !== '') {
+                    addTask();
+                }
+            });
+            
+            // Category filter functionality
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Set current filter
+                    currentFilter = this.getAttribute('data-filter');
+                    
+                    // Apply filter
+                    applyFilter();
+                });
+            });
+            
+            // Function to add a new task
+            function addTask() {
+                const taskText = taskInput.value.trim();
+                if (taskText === '') return;
+                
+                // Create new task
+                createTaskElement(taskText, false);
+                
+                // Clear input
+                taskInput.value = '';
+                addButton.disabled = true;
+                
+                // Save tasks to localStorage
+                saveTasks();
+                
+                // Apply current filter
+                applyFilter();
+            }
+            
+            // Function to create a task element
+            function createTaskElement(text, isCompleted) {
+                const taskId = 'task-' + Date.now();
+                
+                // Create task container
+                const taskDiv = document.createElement('div');
+                taskDiv.className = 'task';
+                taskDiv.dataset.id = taskId;
+                taskDiv.dataset.completed = isCompleted;
+                
+                // Create checkbox
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = taskId;
+                checkbox.checked = isCompleted;
+                checkbox.addEventListener('change', function() {
+                    const completed = this.checked;
+                    label.style.textDecoration = completed ? 'line-through' : 'none';
+                    taskDiv.dataset.completed = completed;
+                    saveTasks();
+                    applyFilter();
+                });
+                
+                // Create label
+                const label = document.createElement('label');
+                label.htmlFor = taskId;
+                label.textContent = text;
+                if (isCompleted) {
+                    label.style.textDecoration = 'line-through';
+                }
+                
+                // Create delete button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.innerHTML = '&times;';
+                deleteBtn.title = 'Delete task';
+                deleteBtn.addEventListener('click', function() {
+                    taskDiv.remove();
+                    saveTasks();
+                });
+                
+                // Append elements to task div
+                taskDiv.appendChild(checkbox);
+                taskDiv.appendChild(label);
+                taskDiv.appendChild(deleteBtn);
+                
+                // Add task to list
+                taskList.appendChild(taskDiv);
+            }
+            
+            // Function to apply filter
+            function applyFilter() {
+                const tasks = document.querySelectorAll('.task');
+                
+                tasks.forEach(task => {
+                    const isCompleted = task.dataset.completed === 'true';
+                    
+                    switch(currentFilter) {
+                        case 'active':
+                            task.style.display = isCompleted ? 'none' : 'flex';
+                            break;
+                        case 'completed':
+                            task.style.display = isCompleted ? 'flex' : 'none';
+                            break;
+                        default: // 'all'
+                            task.style.display = 'flex';
+                    }
+                });
+            }
+            
+            // Function to save tasks to localStorage
+            function saveTasks() {
+                const tasks = [];
+                document.querySelectorAll('.task').forEach(taskEl => {
+                    const taskText = taskEl.querySelector('label').textContent;
+                    const isCompleted = taskEl.querySelector('input[type="checkbox"]').checked;
+                    tasks.push({ text: taskText, completed: isCompleted });
+                });
+                localStorage.setItem('todoTasks', JSON.stringify(tasks));
+            }
+            
+            // Function to load tasks from localStorage
+            function loadTasks() {
+                const savedTasks = localStorage.getItem('todoTasks');
+                if (savedTasks) {
+                    const tasks = JSON.parse(savedTasks);
+                    tasks.forEach(task => {
+                        createTaskElement(task.text, task.completed);
+                    });
+                } else {
+                    // Add default tasks if no saved tasks
+                    createTaskElement('Complete homework assignment', false);
+                    createTaskElement('Read chapter 5 for Biology', false);
+                    createTaskElement('Practice coding for 1 hour', false);
+                    createTaskElement('Prepare notes for upcoming exam', false);
+                    createTaskElement('Review last week\'s lecture', true);
+                }
+                
+                // Apply initial filter
+                applyFilter();
+            }
+        });
+    </script>
+</body>
+</html>

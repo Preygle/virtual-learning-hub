@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySphere - Courses</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .body {
+            background-color: #f0f8ff;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background-color: #2c3e50;
+            justify-content: space-between;
+            padding: 15px 30px;
+        }
+
+        .logo img {
+            width: 80px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex: 1;
+            margin: 0 20px;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f39c12;
+        }
+
+        .nav-links a.active {
+            color: #f39c12;
+            font-weight: bold;
+            border-bottom: 2px solid #f39c12;
+        }
+
+        .signup-btn {
+            background-color: #f39c12;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-left: auto;
+        }
+
+        .signup-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .courses-container {
+            padding: 40px 20px;
+            background-color: #f0f8ff;
+        }
+
+        .courses-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 40px;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .course-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .course-channel {
+            color: #f39c12;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .course-description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .course-link {
+            display: inline-block;
+            background-color: #f39c12;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .course-link:hover {
+            background-color: #e67e22;
+        }
+
+        .signup-container {
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo"><img src="/Users/madhutripathi/Desktop/logo.svg" alt="logo"></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#notes">Notes</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+            <li><a href="about_us.html">About Us</a></li>
+            <li><a href="contact_us.html">Contact Us</a></li>
+        </ul>
+        <div class="signup-container">
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="courses-container">
+        <h1 class="courses-title">Featured Courses</h1>
+        <div class="courses-grid">
+            <!-- Course 1 -->
+            <div class="course-card">
+                <img src="https://i.ytimg.com/vi/z9bZufPHFLU/maxresdefault.jpg" alt="DSA Course" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title">Data Structures and Algorithms</h3>
+                    <span class="course-channel">Neso Academy</span>
+                    <p class="course-description">
+                        Comprehensive coverage of DSA fundamentals with visual explanations and step-by-step
+                        derivations.
+                        Perfect for building core understanding.
+                    </p>
+                    <a href="https://www.youtube.com/playlist?list=PLBF3763AF2E1C572F" class="course-link"
+                        target="_blank">Watch Course</a>
+                </div>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="course-card">
+                <img src="https://i.ytimg.com/vi/vBURTt97EkA/maxresdefault.jpg" alt="OS Course" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title">Operating Systems</h3>
+                    <span class="course-channel">Gate Smashers</span>
+                    <p class="course-description">
+                        Covers all key OS topics with GATE/college-level depth. Essential for understanding computer
+                        systems.
+                    </p>
+                    <a href="https://www.youtube.com/playlist?list=PLmXKhU9FNesQnU8ZIir6kt1lE9YtoHcsM"
+                        class="course-link" target="_blank">Watch Course</a>
+                </div>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="course-card">
+                <img src="https://i.ytimg.com/vi/1vbXmCrkT3Y/maxresdefault.jpg" alt="DBMS Course" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title">Database Management Systems</h3>
+                    <span class="course-channel">Jenny's Lectures</span>
+                    <p class="course-description">
+                        Excellent for conceptual clarity and notes. Covers everything from basics to advanced DBMS
+                        concepts.
+                    </p>
+                    <a href="https://www.youtube.com/playlist?list=PLdo5W4Nhv31a8UcMN9-35ghv8qyFWD9_S"
+                        class="course-link" target="_blank">Watch Course</a>
+                </div>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="course-card">
+                <img src="https://i.ytimg.com/vi/3QhU9jd03a0/maxresdefault.jpg" alt="DSA Bootcamp" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title">DSA Bootcamp (Java)</h3>
+                    <span class="course-channel">Kunal Kushwaha</span>
+                    <p class="course-description">
+                        Starts from basics to advanced—awesome for placements and open source prep. Practical approach
+                        to DSA.
+                    </p>
+                    <a href="https://www.youtube.com/playlist?list=PL9gnSGHSqcnp39cTyB1dTZ2pJ04Xmdrod"
+                        class="course-link" target="_blank">Watch Course</a>
+                </div>
+            </div>
+
+            <!-- Course 5 -->
+            <div class="course-card">
+                <img src="https://i.ytimg.com/vi/apGV9Kg7ics/maxresdefault.jpg" alt="Git Course" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title">Git & GitHub</h3>
+                    <span class="course-channel">CodeWithHarry</span>
+                    <p class="course-description">
+                        Learn version control with real examples and a practical approach. Essential for all developers.
+                    </p>
+                    <a href="https://www.youtube.com/playlist?list=PLu0W_9lII9agICnT8t4iYVSZ3eykIAOME"
+                        class="course-link" target="_blank">Watch Course</a>
+                </div>
+            </div>
+
+            <!-- Course 6 -->
+            <div class="course-card">
+                <img src="https://i.ytimg.com/vi/kqtD5dpn9C8/maxresdefault.jpg" alt="Python Course"
+                    class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title">Python for Beginners</h3>
+                    <span class="course-channel">Programming with Mosh</span>
+                    <p class="course-description">
+                        Super beginner-friendly, clear explanations with great pacing. Perfect for absolute beginners.
+                    </p>
+                    <a href="https://www.youtube.com/watch?v=kqtD5dpn9C8" class="course-link" target="_blank">Watch
+                        Course</a>
+                </div>
+            </div>
+
+            <!-- Course 7 -->
+            <div class="course-card">
+                <img src="https://i.ytimg.com/vi/OKuiyX5k6zg/maxresdefault.jpg" alt="Web Dev Course"
+                    class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title">Web Development Full Course</h3>
+                    <span class="course-channel">Bro Code</span>
+                    <p class="course-description">
+                        From frontend to backend, all in one course. Comprehensive coverage of modern web development.
+                    </p>
+                    <a href="https://www.youtube.com/playlist?list=PLZyvi_9gamL-EE3zQJbU5N5z4YXxRW0IN"
+                        class="course-link" target="_blank">Watch Course</a>
+                </div>
+            </div>
+
+            <!-- Course 8 -->
+            <div class="course-card">
+                <img src="https://i.ytimg.com/vi/7eh4d6sabA0/maxresdefault.jpg" alt="ML Course" class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title">Machine Learning with Python</h3>
+                    <span class="course-channel">Simplilearn</span>
+                    <p class="course-description">
+                        Covers core ML concepts with scikit-learn and basic models. Great introduction to machine
+                        learning.
+                    </p>
+                    <a href="https://www.youtube.com/watch?v=7eh4d6sabA0" class="course-link" target="_blank">Watch
+                        Course</a>
+                </div>
+            </div>
+            <!-- Course 9 -->
+            <div class="course-card">
+                <img src="https://miro.medium.com/v2/resize:fit:1400/1*5ZLci3SuR0zM_QlZOADv8Q.jpeg" alt="A2Z DSA Course"
+                    class="course-image">
+                <div class="course-content">
+                    <h3 class="course-title">A2Z DSA Course</h3>
+                    <span class="course-channel">Take U Forward</span>
+                    <p class="course-description">
+                        Structured DSA roadmap loved by many for placement prep. Covers all patterns and problem-solving
+                        techniques.
+                    </p>
+                    <a href="https://www.youtube.com/playlist?list=PLKHLp2fX1KNpJ4WhRrTS8xg3oT8_2DqS4"
+                        class="course-link" target="_blank">Watch Course</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
